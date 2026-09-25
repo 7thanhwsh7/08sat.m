@@ -250,6 +250,24 @@
   #startScreen .wBg .panelR{position:absolute;inset:0;background:rgba(255,255,255,.08);clip-path:polygon(100% 18%,100% 100%,62% 100%);}
   #startScreen .wBg svg{position:absolute;right:4%;bottom:6%;width:min(38vw,520px);height:auto;opacity:.22;}
   #startScreen .wBg .glyph{position:absolute;color:rgba(255,255,255,.13);font-family:'Georgia',serif;font-style:italic;user-select:none;}
+  /* ---- nền màn hình đăng nhập chuyển động ---- */
+  #startScreen .wBg .grid{animation:wGridDrift 28s linear infinite;}
+  @keyframes wGridDrift{from{background-position:0 0,0 0,0 0,0 0;}to{background-position:120px 120px,120px 120px,24px 24px,24px 24px;}}
+  #startScreen .wBg .panelL{animation:wPanelL 14s ease-in-out infinite alternate;}
+  @keyframes wPanelL{from{clip-path:polygon(0 0,34% 0,0 74%);}to{clip-path:polygon(0 0,40% 0,0 82%);}}
+  #startScreen .wBg .panelR{animation:wPanelR 16s ease-in-out infinite alternate;}
+  @keyframes wPanelR{from{clip-path:polygon(100% 18%,100% 100%,62% 100%);}to{clip-path:polygon(100% 10%,100% 100%,56% 100%);}}
+  #startScreen .wBg .glyph{animation:wFloat 9s ease-in-out infinite;will-change:transform;}
+  #startScreen .wBg .glyph:nth-of-type(2){animation-duration:11s;animation-delay:-3s;}
+  #startScreen .wBg .glyph:nth-of-type(3){animation-duration:10s;animation-delay:-6s;}
+  #startScreen .wBg .glyph:nth-of-type(4){animation-duration:12s;animation-delay:-1.5s;}
+  @keyframes wFloat{0%,100%{transform:translate(0,0) rotate(0deg);opacity:.75;}
+    50%{transform:translate(14px,-22px) rotate(-4deg);opacity:1;}}
+  #startScreen .wBg svg{animation:wSvgBob 12s ease-in-out infinite;}
+  @keyframes wSvgBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  #startScreen .wBg svg .wCurve{stroke-dasharray:1000;stroke-dashoffset:1000;animation:wDraw 7s ease-in-out infinite;}
+  @keyframes wDraw{0%{stroke-dashoffset:1000;}45%,80%{stroke-dashoffset:0;}100%{stroke-dashoffset:-1000;}}
+  @media (prefers-reduced-motion: reduce){#startScreen .wBg *{animation:none !important;}}
   .wcard{position:relative;background:#fff;width:100%;max-width:460px;border-radius:6px;overflow:hidden;
     box-shadow:0 18px 50px rgba(3,24,56,.38);}
   .wcard .wHead{background:#0b3a74;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 24px;}
@@ -392,8 +410,11 @@
     <svg viewBox="0 0 520 360" fill="none" stroke="#fff" stroke-width="3">
       <line x1="20" y1="300" x2="505" y2="300"/><polygon points="515,300 500,293 500,307" fill="#fff" stroke="none"/>
       <line x1="120" y1="345" x2="120" y2="20"/><polygon points="120,10 113,25 127,25" fill="#fff" stroke="none"/>
-      <path d="M40 40 Q 270 560 500 40" stroke-width="4"/>
-      <circle cx="270" cy="300" r="7" fill="#f2b233" stroke="none"/>
+      <path d="M40 40 Q 270 560 500 40" stroke-width="4" stroke-opacity=".35"/>
+      <path class="wCurve" d="M40 40 Q 270 560 500 40" stroke-width="4" pathLength="1000"/>
+      <circle r="7" fill="#f2b233" stroke="none">
+        <animateMotion dur="7s" repeatCount="indefinite" path="M40 40 Q 270 560 500 40" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>
+      </circle>
     </svg>
   </div>
   <div class="wcard">
